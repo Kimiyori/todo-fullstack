@@ -4,12 +4,12 @@ import { FC, useContext } from 'react';
 import { DragAndDropContext } from 'context/DragAndDropContext';
 
 type ToDoDragTaskProps = {
-  taskId: string;
+  taskId: number;
 };
 const ToDoDragTask: FC<ToDoDragTaskProps> = ({ taskId }) => {
   const { handleDragging } = useContext(DragAndDropContext);
   const handleDragStart = (event: React.DragEvent<HTMLImageElement>) => {
-    event.dataTransfer.setData('text', taskId);
+    event.dataTransfer.setData('text', String(taskId));
     handleDragging(true);
   };
   const handleDragEnd = () => handleDragging(false);

@@ -11,15 +11,21 @@ datasource db {
 }
 
 model Section {
-  id    Int     @default(autoincrement()) @id
-  name String  @unique @db.VarChar(140)
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(140)
   items Item[]
 }
 
 model Item {
-  id    Int     @default(autoincrement()) @id
-  section  Section    @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  sectionId  Int  @unique
-  name String  @unique @db.VarChar(140)
-  text String
+  id        Int          @id @default(autoincrement())
+  section   Section      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId Int
+  name      String       @unique @db.VarChar(140)
+  category  ItemCategory @default(NewTask)
+}
+
+enum ItemCategory {
+  NewTask
+  InProcess
+  Completed
 }

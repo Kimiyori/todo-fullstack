@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ItemEntity } from './entity/item.entity';
 
 @ApiTags('item')
@@ -22,15 +22,16 @@ export class ItemController {
   }
 
   @Get()
-  @ApiOperation({ description: 'Return all шеуь instances' })
+  @ApiOperation({ description: 'Return all item instances' })
+  @ApiQuery({ name: 'sectionId', type: Number, required: false })
   @ApiResponse({
     status: 200,
     description: 'All item instances',
     type: ItemEntity,
     isArray: true,
   })
-  async findAll() {
-    return await this.itemService.findAll();
+  async findAll(@Query('sectionId') sectionId?: number) {
+    return await this.itemService.findAll(sectionId);
   }
 
   @Get(':id')

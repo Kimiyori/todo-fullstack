@@ -3,7 +3,7 @@ import { SectionService } from './section.service';
 import { CreateSectionDtoIn } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { SectionEntity } from './entity/section.entity';
+import { SectionEntity, SectionEntityWithoutItems } from './entity/section.entity';
 
 @ApiTags('section')
 @Controller('section')
@@ -15,7 +15,7 @@ export class SectionController {
   @ApiResponse({
     status: 201,
     description: 'Created instance',
-    type: SectionEntity,
+    type: SectionEntityWithoutItems,
   })
   async create(@Body() createSectionDto: CreateSectionDtoIn) {
     return await this.sectionService.create(createSectionDto);
@@ -26,7 +26,7 @@ export class SectionController {
   @ApiResponse({
     status: 200,
     description: 'All section instances',
-    type: SectionEntity,
+    type: SectionEntityWithoutItems,
     isArray: true,
   })
   async findAll() {

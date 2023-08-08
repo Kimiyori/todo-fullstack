@@ -1,7 +1,7 @@
 import { ToDoCategoriesType } from 'types/Main';
 export const ToDoCategoriesNames = {
-  New: 'New tasks',
-  InProcess: 'In Process',
+  New: 'NewTask',
+  InProcess: 'InProcess',
   Completed: 'Completed',
 };
 

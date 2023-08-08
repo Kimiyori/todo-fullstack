@@ -1,19 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateItemDto } from './dto/create-item.dto';
 
 @Injectable()
 export class ItemService {
   constructor(private prisma: PrismaService) {}
-  async create(data: CreateItemDto) {
+  async create(data: Prisma.ItemCreateInput) {
     return await this.prisma.item.create({
       data,
     });
   }
 
-  async findAll() {
-    return await this.prisma.item.findMany();
+  async findAll(sectionId?: number) {
+    const whereSection = sectionId && {
+      where: {
+        sectionId: +sectionId,
+      },
+    };
+    return await this.prisma.item.findMany({ ...whereSection });
   }
 
   async findOne(data: Prisma.ItemWhereUniqueInput) {
@@ -25,8 +29,8 @@ export class ItemService {
   async update(params: { where: Prisma.ItemWhereUniqueInput; data: Prisma.ItemUpdateInput }) {
     const { data, where } = params;
     return await this.prisma.item.update({
-      data,
       where,
+      data,
     });
   }
 

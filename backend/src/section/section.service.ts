@@ -9,11 +9,8 @@ export class SectionService {
     return await this.prisma.section.create({
       data,
       include: {
-        items: {
-          select: {
-            id: true,
-            name: true,
-          },
+        _count: {
+          select: { items: true },
         },
       },
     });
@@ -22,12 +19,6 @@ export class SectionService {
   async findAll() {
     return await this.prisma.section.findMany({
       include: {
-        items: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
         _count: {
           select: { items: true },
         },

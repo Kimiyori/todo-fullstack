@@ -2,14 +2,16 @@ import { styled } from 'styled-components';
 import { DragAndDropProvider } from 'context/DragAndDropContext';
 import { toDoCategories } from 'data/main';
 import ToDoList from 'components/shared/todo/ToDoList';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 const ToDoContainer: FC = () => {
   return (
     <DragAndDropProvider>
       <CategoriesWrapper>
         {toDoCategories.map((category) => (
-          <ToDoList status={category} key={category.name} />
+          <Suspense key={category.name} fallback={<div>loading...</div>}>
+            <ToDoList status={category} />
+          </Suspense>
         ))}
       </CategoriesWrapper>
     </DragAndDropProvider>

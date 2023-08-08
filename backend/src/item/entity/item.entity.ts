@@ -10,8 +10,8 @@ export class ItemEntity {
   name: string;
   @IsString()
   @ApiProperty()
-  text: string;
+  sectionId: string;
   @IsString()
   @ApiProperty()
-  sectionId: string;
+  category: 'NewTask' | 'InProcess' | 'Completed';
 }

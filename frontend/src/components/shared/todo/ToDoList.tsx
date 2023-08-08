@@ -1,30 +1,34 @@
 import styled from 'styled-components';
 import { DragEvent, FC, useContext } from 'react';
-import { TasksContext } from 'context/TasksContext';
 import { DragAndDropContext } from 'context/DragAndDropContext';
 import { ToDoCategoriesType } from 'types/Main';
 import ToDoItem from 'components/shared/todo/ToDoItem';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { filteredItemsList, itemList } from 'store/item';
+import { updateItem } from 'api/item';
 
 type ToDoListProps = {
   status: ToDoCategoriesType;
 };
 
 const ToDoList: FC<ToDoListProps> = ({ status }) => {
-  const { todosFiltered, updateTask } = useContext(TasksContext);
   const { handleDragging } = useContext(DragAndDropContext);
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+  const setItem = useSetAtom(itemList);
+  const handleDrop = async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const id = event.dataTransfer.getData('text');
-    updateTask(id, { status: status.name });
+    const updated = await updateItem(+id, { category: status.name });
+    setItem(async (section) => (await section).map((item) => (item.id === updated.id ? updated : item)));
     handleDragging(false);
   };
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+  const data = useAtomValue(filteredItemsList);
   return (
     <ToDoListContainer $bgColor={status.bgColor} onDragOver={handleDragOver} onDrop={handleDrop}>
       <h3>{status.name}</h3>
-      {todosFiltered.map((item) => status.name === item.status && <ToDoItem data={item} key={item.id} />)}
+      {data.map((item) => status.name === item.category && <ToDoItem data={item} key={item.id} />)}
     </ToDoListContainer>
   );
 };

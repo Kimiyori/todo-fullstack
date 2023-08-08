@@ -6,10 +6,10 @@ export class CreateItemDto {
   @MaxLength(140)
   @ApiProperty()
   name: string;
-  @IsString()
-  @ApiProperty()
-  text: string;
   @IsNumber()
   @ApiProperty()
   sectionId: number;
+  @IsString()
+  @ApiProperty()
+  category: 'NewTask' | 'InProcess' | 'Completed';
 }

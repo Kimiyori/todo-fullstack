@@ -6,8 +6,9 @@ type TextAreaProps = {
   placeholder?: string;
   disabled?: boolean;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  className?: string;
 };
-const TextArea: FC<TextAreaProps> = ({ text, placeholder, disabled, onChange }) => {
+const TextArea: FC<TextAreaProps> = ({ text, placeholder, disabled, onChange, className }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -18,7 +19,16 @@ const TextArea: FC<TextAreaProps> = ({ text, placeholder, disabled, onChange }) 
     const scrollHeight = textareaRef.current.scrollHeight;
     textareaRef.current.style.height = scrollHeight + 'px';
   }, [text]);
-  return <Textarea ref={textareaRef} placeholder={placeholder} disabled={disabled} onChange={onChange} value={text} />;
+  return (
+    <Textarea
+      className={className}
+      ref={textareaRef}
+      placeholder={placeholder}
+      disabled={disabled}
+      onChange={onChange}
+      value={text}
+    />
+  );
 };
 
 const Textarea = styled.textarea`
@@ -30,6 +40,7 @@ const Textarea = styled.textarea`
   margin: 0;
   background: ${(props) => props.theme.color.Secondary};
   color: ${(props) => props.theme.color.OnSecondary};
+  text-align: center;
 `;
 
 export default TextArea;

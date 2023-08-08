@@ -1,16 +1,19 @@
-import { useReducer, MouseEvent, useContext, FC } from 'react';
+import { useReducer, MouseEvent, FC } from 'react';
 import { styled } from 'styled-components';
 import { ReactComponent as Dropdown } from 'assets/Resume.svg';
-import { TasksContext } from 'context/TasksContext';
 import { toDoCategories } from 'data/main';
+import { updateItem } from 'api/item';
+import { itemList } from 'store/item';
+import { useSetAtom } from 'jotai';
 
-type ToDoDropdownProps = { taskId: string };
+type ToDoDropdownProps = { taskId: number };
 
 const ToDoDropdown: FC<ToDoDropdownProps> = ({ taskId }) => {
   const [isShow, toggleIsShow] = useReducer((isShow) => !isShow, false);
-  const { updateTask } = useContext(TasksContext);
-  const handleUpdateTask = (event: MouseEvent<HTMLLIElement>) => {
-    updateTask(taskId, { status: (event.target as HTMLElement).textContent as string });
+  const setItem = useSetAtom(itemList);
+  const handleUpdateTask = async (event: MouseEvent<HTMLLIElement>) => {
+    const updated = await updateItem(taskId, { category: (event.target as HTMLElement).textContent as string });
+    setItem(async (section) => (await section).map((item) => (item.id === updated.id ? updated : item)));
     toggleIsShow();
   };
   return (

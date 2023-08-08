@@ -1,11 +1,15 @@
-import { ChangeEvent, FC, useContext } from 'react';
+import { ChangeEvent, FC, startTransition } from 'react';
 import InputForm from 'components/core/Input/Input';
-import { TasksContext } from 'context/TasksContext';
 import Button from 'components/core/Button/Button';
-
-const InputFilter: FC = () => {
-  const { filterString, setFilterString } = useContext(TasksContext);
-  const clearFilter = () => setFilterString('');
+import { SetStateAction } from 'jotai';
+type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result;
+const InputFilter: FC<{ filterString: string; setFilterString: SetAtom<[SetStateAction<string>], void> }> = ({
+  filterString,
+  setFilterString,
+}) => {
+  const clearFilter = () => startTransition(() => setFilterString(''));
+  const changeFilter = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    startTransition(() => setFilterString(event.target.value));
   return (
     <InputForm
       placeholder={'Filter works in real time'}
@@ -16,7 +20,7 @@ const InputFilter: FC = () => {
           <Button text={'Clear'} onClick={clearFilter} />
         </>
       }
-      onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setFilterString(event.target.value)}
+      onChange={changeFilter}
     />
   );
 };

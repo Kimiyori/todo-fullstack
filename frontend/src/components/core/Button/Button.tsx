@@ -21,14 +21,14 @@ const ButtonElement = styled.button`
   background: ${(props) => props.theme.color.Primary};
   cursor: pointer;
   color: ${(props) => props.theme.color.OnPrimary};
-  border: 0;
-  border-left: 1px solid ${(props) => props.theme.color.Outline};
+  border: 1px solid ${(props) => props.theme.color.Outline};
   &:hover {
     background: ${(props) => props.theme.color.Secondary};
     color: ${(props) => props.theme.color.OnSecondary};
   }
   &:disabled {
     background: ${(props) => props.theme.color.Surface};
+    opacity:0.5;
     cursor: auto;
   }
 `;
