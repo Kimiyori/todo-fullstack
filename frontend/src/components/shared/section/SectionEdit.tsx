@@ -1,4 +1,5 @@
 import { updateSection } from 'api/section';
+import axios from 'axios';
 import Button from 'components/core/Button/Button';
 import InputForm from 'components/core/Input/Input';
 import Tooltip from 'components/core/Tooltip/Tooltip';
@@ -17,11 +18,17 @@ const SectionEdit: FC<{ id: number; name: string; toggleEdit: () => void }> = ({
     } else if (sectionName.trim().length > 140) {
       setError('Task is too long');
     } else {
-      await updateSection(id, sectionName);
-      setSection(async (currSections) =>
-        (await currSections).map((section) => (section.id === id ? { ...section, ...{ name: sectionName } } : section)),
-      );
-      toggleEdit();
+      try {
+        await updateSection(id, sectionName);
+        setSection(async (currSections) =>
+          (await currSections).map((section) =>
+            section.id === id ? { ...section, ...{ name: sectionName } } : section,
+          ),
+        );
+        toggleEdit();
+      } catch (error: unknown) {
+        axios.isAxiosError(error) && error.response?.data?.statusCode === 409 && setError('Section alreadye xist');
+      }
     }
   };
 

@@ -1,4 +1,5 @@
 import { createSection } from 'api/section';
+import axios from 'axios';
 import Board from 'components/core/Board/Board';
 import Spinner from 'components/core/LoadingElement/LoadingElement';
 import InputAddTask from 'components/shared/fields/InputAddTask/InputAdd';
@@ -16,11 +17,15 @@ const SectionPage: FC = () => {
     } else if (itemName.trim().length > 140) {
       setError('Task is too long');
     } else {
-      const newSection = await createSection(itemName);
-      addSection(async (section) => {
-        (await section).push(newSection);
-        return section;
-      });
+      try {
+        const newSection = await createSection(itemName);
+        addSection(async (section) => {
+          (await section).push(newSection);
+          return section;
+        });
+      } catch (error: unknown) {
+        axios.isAxiosError(error) && error.response?.data?.statusCode === 409 && setError('Section alreadye xist');
+      }
     }
   };
   return (
