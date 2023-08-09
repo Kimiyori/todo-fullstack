@@ -1,15 +1,15 @@
 import { createSection } from 'api/section';
 import Board from 'components/core/Board/Board';
+import Spinner from 'components/core/LoadingElement/LoadingElement';
 import InputAddTask from 'components/shared/fields/InputAddTask/InputAdd';
 import InputFilter from 'components/shared/fields/InputFilter/InputFilter';
 import SectionContainer from 'components/shared/section/SectionContainer';
-import { useAtom, useSetAtom } from 'jotai';
-import { Suspense } from 'react';
+import { useSetAtom } from 'jotai';
+import { FC, Suspense } from 'react';
 import { sectionFilterString, sectionList } from 'store/section';
 
-const SectionPage = () => {
+const SectionPage: FC = () => {
   const addSection = useSetAtom(sectionList);
-  const [filterString, setFilterString] = useAtom(sectionFilterString);
   const handleCreateSection = async (itemName: string, setError: (value: string) => void) => {
     if (!itemName.trim().length) {
       setError('Empty task is invalid');
@@ -28,9 +28,9 @@ const SectionPage = () => {
       <Board title="ToDo Sections" />
       <div>
         <InputAddTask handleCreate={handleCreateSection} />
-        <InputFilter filterString={filterString} setFilterString={setFilterString} />
+        <InputFilter filterStringAtom={sectionFilterString} />
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <SectionContainer />
       </Suspense>
     </>

@@ -1,12 +1,13 @@
 import { ChangeEvent, FC, startTransition } from 'react';
 import InputForm from 'components/core/Input/Input';
 import Button from 'components/core/Button/Button';
-import { SetStateAction } from 'jotai';
-type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result;
-const InputFilter: FC<{ filterString: string; setFilterString: SetAtom<[SetStateAction<string>], void> }> = ({
-  filterString,
-  setFilterString,
-}) => {
+import { PrimitiveAtom, useAtom } from 'jotai';
+
+type InputFilterProps = {
+  filterStringAtom: PrimitiveAtom<string>;
+};
+const InputFilter: FC<InputFilterProps> = ({ filterStringAtom }) => {
+  const [filterString, setFilterString] = useAtom(filterStringAtom);
   const clearFilter = () => startTransition(() => setFilterString(''));
   const changeFilter = (event: ChangeEvent<HTMLTextAreaElement>) =>
     startTransition(() => setFilterString(event.target.value));

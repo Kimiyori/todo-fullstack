@@ -24,7 +24,7 @@ const ToDoItem: FC<ToDoItemProps> = ({ data }) => {
       ) : (
         <TaskWrapper>
           <TextArea text={task} disabled={true} />
-          <Button text={'Edit'} onClick={toggleEditing} />
+          <Button text='Edit' onClick={toggleEditing} />
           {/* <DeleteButton taskId={data.id} /> */}
           {isDesktop ? <ToDoDragTask taskId={data.id} /> : <ToDoDropdown taskId={data.id} />}
         </TaskWrapper>

@@ -8,20 +8,20 @@ const SectionContainer: FC = () => {
   return (
     <CategoriesWrapper>
       {data.map((section) => (
-        <SectionCard key={section.id} id={section.id} name={section.name} itemsCount={section._count.items} />
+        <SectionCard key={section.id} data={section} />
       ))}
     </CategoriesWrapper>
   );
 };
 
+export default SectionContainer;
+
 const CategoriesWrapper = styled.div`
   width: 80%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2em 2em;
   @media ${(props) => props.theme.breakpoints.lg} {
     flex-direction: row;
   }
 `;
-
-export default SectionContainer;

@@ -45,8 +45,8 @@ const ToDoEditItem: FC<ToDoEditItemProps> = ({ data, toggleFrom, currentTask, se
         inputValue={currentTask}
         actionButtons={
           <>
-            <Button text={'Save'} onClick={handleUpdate} />
-            <Button text={'Cancel'} onClick={handleCancel} />
+            <Button text="Save" onClick={handleUpdate} />
+            <Button text="Cancel" onClick={handleCancel} />
           </>
         }
         onChange={handleChange}
