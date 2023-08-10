@@ -1,8 +1,8 @@
 import { ToDo } from './ToDo';
 import taxios from './meta';
 
-export const getallSectionItems = async ( sectionId: number) => {
-  const res = await taxios.get('/item', { query: { sectionId: sectionId } });
+export const getallSectionItems = async (id: number) => {
+  const res = await taxios.get('/section/{id}', { params: { id: id }, query: { includeItems: true } });
   return res.data;
 };
 

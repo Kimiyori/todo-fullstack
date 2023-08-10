@@ -27,7 +27,9 @@ const SectionEdit: FC<{ id: number; name: string; toggleEdit: () => void }> = ({
         );
         toggleEdit();
       } catch (error: unknown) {
-        axios.isAxiosError(error) && error.response?.data?.statusCode === 409 && setError('Section alreadye xist');
+        axios.isAxiosError(error) &&
+          error.response?.data?.statusCode !== 200 &&
+          setError(error.response?.data?.message);
       }
     }
   };

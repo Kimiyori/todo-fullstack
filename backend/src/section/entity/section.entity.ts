@@ -15,9 +15,12 @@ export class SectionEntity {
   @MaxLength(140)
   @ApiProperty()
   name: string;
-  @ApiProperty({ isArray: true, type: ItemEntity })
-  items: ItemEntity[];
+  @ApiProperty({ isArray: true, type: ItemEntity, required: false })
+  items?: ItemEntityCompact[];
   @ApiProperty({ type: CountItems })
   _count: CountItems;
 }
+
+export class ItemEntityCompact extends OmitType(ItemEntity, ['sectionId'] as const) {}
+
 export class SectionEntityWithoutItems extends OmitType(SectionEntity, ['items'] as const) {}

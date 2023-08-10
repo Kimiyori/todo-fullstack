@@ -10,7 +10,7 @@ type ToDoListProps = {
 
 const ToDoList: FC<ToDoListProps> = ({ status }) => {
   const data = useAtomValue(filteredItemsList);
-  return <>{data.map((item) => status.name === item.category && <ToDoItem data={item} key={item.id} />)}</>;
+  return <>{data?.map((item) => status.name === item.category && <ToDoItem data={item} key={item.id} />)}</>;
 };
 
 export default ToDoList;

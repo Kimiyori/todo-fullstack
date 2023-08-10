@@ -29,7 +29,7 @@ const ToDoEditItem: FC<ToDoEditItemProps> = ({ data, toggleFrom, currentTask, se
       setError('Task is too long');
     } else {
       const updated = await updateItem(data.id, { name: currentTask.trim() });
-      setItem(async (section) => (await section).map((item) => (item.id === updated.id ? updated : item)));
+      setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
       toggleFrom();
     }
   };

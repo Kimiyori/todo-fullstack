@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ParseBoolPipe, Query } from '@nestjs/common';
 import { SectionService } from './section.service';
 import { CreateSectionDtoIn } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SectionEntity, SectionEntityWithoutItems } from './entity/section.entity';
 
 @ApiTags('section')
@@ -35,13 +35,14 @@ export class SectionController {
 
   @Get(':id')
   @ApiOperation({ description: 'Return section instance' })
+  @ApiQuery({ name: 'includeItems', type: Boolean, required: false })
   @ApiResponse({
     status: 200,
     description: 'Found instance',
     type: SectionEntity,
   })
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return await this.sectionService.findOne({ id: id });
+  async findOne(@Param('id', ParseIntPipe) id: number, @Query('includeItems') includeItems?: boolean) {
+    return await this.sectionService.findOne({ id: id }, includeItems);
   }
 
   @Patch(':id')

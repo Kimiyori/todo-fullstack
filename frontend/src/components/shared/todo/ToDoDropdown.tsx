@@ -13,7 +13,7 @@ const ToDoDropdown: FC<ToDoDropdownProps> = ({ taskId }) => {
   const setItem = useSetAtom(itemList);
   const handleUpdateTask = async (event: MouseEvent<HTMLLIElement>) => {
     const updated = await updateItem(taskId, { category: (event.target as HTMLElement).textContent as string });
-    setItem(async (section) => (await section).map((item) => (item.id === updated.id ? updated : item)));
+    setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
     toggleIsShow();
   };
   return (

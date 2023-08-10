@@ -24,7 +24,9 @@ const SectionPage: FC = () => {
           return section;
         });
       } catch (error: unknown) {
-        axios.isAxiosError(error) && error.response?.data?.statusCode === 409 && setError('Section alreadye xist');
+         axios.isAxiosError(error) &&
+           error.response?.data?.statusCode !== 201 &&
+           setError(error.response?.data?.message);
       }
     }
   };

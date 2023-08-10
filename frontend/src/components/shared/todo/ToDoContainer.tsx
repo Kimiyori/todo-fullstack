@@ -15,7 +15,7 @@ const ToDoContainer: FC = () => {
     event.preventDefault();
     const id = event.dataTransfer.getData('text');
     const updated = await updateItem(+id, { category: name });
-    setItem(async (section) => (await section).map((item) => (item.id === updated.id ? updated : item)));
+    setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
     handleDragging(false);
   };
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {

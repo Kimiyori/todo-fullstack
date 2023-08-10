@@ -23,7 +23,7 @@ export namespace ToDo {
   export interface SectionEntity {
     id: number;
     name: string;
-    items: ToDo.ItemEntity[];
+    items?: ToDo.ItemEntity[];
     _count: ToDo.CountItems;
     [k: string]: unknown;
   }
@@ -61,6 +61,9 @@ export interface ToDo {
       GET: {
         params: {
           id: number;
+        };
+        query?: {
+          includeItems?: boolean;
         };
         response: ToDo.SectionEntity;
       };

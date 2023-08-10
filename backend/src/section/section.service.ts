@@ -26,9 +26,21 @@ export class SectionService {
     });
   }
 
-  async findOne(data: Prisma.SectionWhereUniqueInput) {
+  async findOne(data: Prisma.SectionWhereUniqueInput, includeItems?: boolean) {
+    const itemsQuery = includeItems && {
+      include: {
+        items: {
+          select: {
+            id: true,
+            name: true,
+            category: true,
+          },
+        },
+      },
+    };
     return this.prisma.section.findFirstOrThrow({
       where: data,
+      ...itemsQuery,
     });
   }
 
