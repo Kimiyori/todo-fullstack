@@ -16,6 +16,8 @@ const Button: FC<ButtonProps> = ({ text, onClick, className, isDisabled = false 
   );
 };
 
+export default Button;
+
 const ButtonElement = styled.button`
   padding: 0.5rem;
   background: ${(props) => props.theme.color.Primary};
@@ -28,9 +30,7 @@ const ButtonElement = styled.button`
   }
   &:disabled {
     background: ${(props) => props.theme.color.Surface};
-    opacity:0.5;
+    opacity: 0.5;
     cursor: auto;
   }
 `;
-
-export default Button;

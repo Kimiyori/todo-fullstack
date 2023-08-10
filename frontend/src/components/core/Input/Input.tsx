@@ -9,7 +9,6 @@ type InputProps = {
   placeholder?: string;
 };
 
-
 const InputForm: FC<InputProps> = ({ inputValue, actionButtons, onChange, placeholder }) => {
   return (
     <InputWrapper>
@@ -19,10 +18,10 @@ const InputForm: FC<InputProps> = ({ inputValue, actionButtons, onChange, placeh
   );
 };
 
+export default InputForm;
+
 const InputWrapper = styled.div`
   display: flex;
   border: 1px solid ${(props) => props.theme.color.Outline};
   margin: 0 1rem 1rem;
 `;
-
-export default InputForm;

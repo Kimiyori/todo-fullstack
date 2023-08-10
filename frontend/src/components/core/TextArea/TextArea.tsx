@@ -31,6 +31,8 @@ const TextArea: FC<TextAreaProps> = ({ text, placeholder, disabled, onChange, cl
   );
 };
 
+export default TextArea;
+
 const Textarea = styled.textarea`
   resize: none;
   flex-grow: 2;
@@ -42,5 +44,3 @@ const Textarea = styled.textarea`
   color: ${(props) => props.theme.color.OnSecondary};
   text-align: center;
 `;
-
-export default TextArea;

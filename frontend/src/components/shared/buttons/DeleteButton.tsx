@@ -25,12 +25,12 @@ const DeleteButton: FC<DeleteButtonProps> = ({ handleRemove }) => {
   );
 };
 
-export const ButtonContainer = styled.section`
+export default DeleteButton;
+
+const ButtonContainer = styled.section`
   display: flex;
   justify-content: space-evenly;
 `;
-export const StyledPopupButton = styled(Button)`
+const StyledPopupButton = styled(Button)`
   border: 1px solid ${(props) => props.theme.color.Outline};
 `;
-
-export default DeleteButton;

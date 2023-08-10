@@ -11,6 +11,8 @@ const Tooltip: FC<TooltipProps> = ({ content }) => {
   );
 };
 
+export default Tooltip;
+
 const TooltipWrapper = styled.div`
   position: relative;
 `;
@@ -24,5 +26,3 @@ const TooltipTip = styled.div`
   background: ${(props) => props.theme.color.Error};
   z-index: 100;
 `;
-
-export default Tooltip;

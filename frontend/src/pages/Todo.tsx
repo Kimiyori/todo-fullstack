@@ -6,6 +6,9 @@ import { itemFilterString, itemId, itemList, sectionAtom } from 'store/item';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { createItem } from 'api/item';
 import { FC, Suspense } from 'react';
+import { Link } from 'react-router-dom';
+import Button from 'components/core/Button/Button';
+import styled from 'styled-components';
 
 const ToDo: FC = () => {
   const addItem = useSetAtom(itemList);
@@ -29,6 +32,9 @@ const ToDo: FC = () => {
         <ToDoBoard />
       </Suspense>
       <div>
+        <Link to="/">
+          <StyledButton text="Back" />
+        </Link>
         <InputAddTask handleCreate={handleCreateItem} />
         <InputFilter filterStringAtom={itemFilterString} />
       </div>
@@ -43,3 +49,8 @@ const ToDoBoard = () => {
 };
 
 export default ToDo;
+
+const StyledButton = styled(Button)`
+  width: 90%;
+  margin: 0 1rem 1rem;
+`;
