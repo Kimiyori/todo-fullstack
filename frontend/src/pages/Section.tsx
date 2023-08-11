@@ -24,9 +24,9 @@ const SectionPage: FC = () => {
           return section;
         });
       } catch (error: unknown) {
-         axios.isAxiosError(error) &&
-           error.response?.data?.statusCode !== 201 &&
-           setError(error.response?.data?.message);
+        axios.isAxiosError(error) &&
+          error.response?.data?.statusCode !== 201 &&
+          setError(error.response?.data?.message);
       }
     }
   };

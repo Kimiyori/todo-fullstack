@@ -1,10 +1,14 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import Fallback from 'components/shared/error/ErrorFallback';
 
 const MainLayout = () => {
   return (
     <MainBackground>
-      <Outlet />
+      <ErrorBoundary FallbackComponent={Fallback}>
+        <Outlet />
+      </ErrorBoundary>
     </MainBackground>
   );
 };
