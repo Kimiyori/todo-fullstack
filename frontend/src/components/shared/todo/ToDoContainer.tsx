@@ -4,18 +4,16 @@ import { toDoCategories } from 'data/main';
 import ToDoList from 'components/shared/todo/ToDoList';
 import { FC, Suspense, useContext, DragEvent } from 'react';
 import { useSetAtom } from 'jotai';
-import { itemList } from 'store/item';
-import { updateItem } from 'api/item';
+import { updateItemAtom } from 'store/item';
 import Spinner from 'components/core/LoadingElement/LoadingElement';
 
 const ToDoContainer: FC = () => {
   const { handleDragging } = useContext(DragAndDropContext);
-  const setItem = useSetAtom(itemList);
+  const setItem = useSetAtom(updateItemAtom);
   const handleDrop = async (event: DragEvent<HTMLDivElement>, name: string) => {
     event.preventDefault();
     const id = event.dataTransfer.getData('text');
-    const updated = await updateItem(+id, { category: name });
-    setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
+    await setItem(id, { category: name });
     handleDragging(false);
   };
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {

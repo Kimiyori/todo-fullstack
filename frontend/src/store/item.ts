@@ -1,4 +1,5 @@
-import { getallSectionItems } from 'api/item';
+import { ToDo } from 'api/ToDo';
+import { getallSectionItems, updateItem } from 'api/item';
 import { atom } from 'jotai';
 import { atomWithDefault } from 'jotai/utils';
 
@@ -18,4 +19,8 @@ export const filteredItemsList = atom(async (get) => {
   const currList = await get(itemList);
   const filterStr = get(itemFilterString);
   return currList?.filter((item) => item.name.toLowerCase().includes(filterStr.toLowerCase()));
+});
+export const updateItemAtom = atom(null, async (_, set, id: number | string, updateData: ToDo.UpdateItemDto) => {
+  const updated = await updateItem(+id, updateData);
+  set(itemList, async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
 });

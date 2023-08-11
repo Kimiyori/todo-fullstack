@@ -4,8 +4,7 @@ import Button from 'components/core/Button/Button';
 import Tooltip from 'components/core/Tooltip/Tooltip';
 import useError from 'hooks/useError';
 import { ToDo } from 'api/ToDo';
-import { updateItem } from 'api/item';
-import { itemList } from 'store/item';
+import {  updateItemAtom } from 'store/item';
 import { useSetAtom } from 'jotai';
 
 type ToDoEditItemProps = {
@@ -16,7 +15,7 @@ type ToDoEditItemProps = {
 };
 
 const ToDoEditItem: FC<ToDoEditItemProps> = ({ data, toggleFrom, currentTask, setCurrentTask }) => {
-  const setItem = useSetAtom(itemList);
+  const setItem = useSetAtom(updateItemAtom);
   const handleCancel = () => {
     setCurrentTask(data.name);
     toggleFrom();
@@ -28,8 +27,7 @@ const ToDoEditItem: FC<ToDoEditItemProps> = ({ data, toggleFrom, currentTask, se
     } else if (currentTask.trim().length > 140) {
       setError('Task is too long');
     } else {
-      const updated = await updateItem(data.id, { name: currentTask.trim() });
-      setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
+      await setItem(data.id, { name: currentTask.trim() });
       toggleFrom();
     }
   };

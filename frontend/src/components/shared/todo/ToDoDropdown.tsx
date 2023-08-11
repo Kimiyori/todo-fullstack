@@ -2,18 +2,16 @@ import { useReducer, MouseEvent, FC } from 'react';
 import { styled } from 'styled-components';
 import { ReactComponent as Dropdown } from 'assets/Resume.svg';
 import { toDoCategories } from 'data/main';
-import { updateItem } from 'api/item';
-import { itemList } from 'store/item';
+import { updateItemAtom } from 'store/item';
 import { useSetAtom } from 'jotai';
 
 type ToDoDropdownProps = { taskId: number };
 
 const ToDoDropdown: FC<ToDoDropdownProps> = ({ taskId }) => {
   const [isShow, toggleIsShow] = useReducer((isShow) => !isShow, false);
-  const setItem = useSetAtom(itemList);
+  const setItem = useSetAtom(updateItemAtom);
   const handleUpdateTask = async (event: MouseEvent<HTMLLIElement>) => {
-    const updated = await updateItem(taskId, { category: (event.target as HTMLElement).textContent as string });
-    setItem(async (section) => (await section)?.map((item) => (item.id === updated.id ? updated : item)));
+    await setItem(taskId, { category: (event.target as HTMLElement).textContent as string });
     toggleIsShow();
   };
   return (
