@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Section {
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(140)
+  items Item[]
+}
+
+model Item {
+  id        Int          @id @default(autoincrement())
+  section   Section      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId Int
+  name      String       @unique @db.VarChar(140)
+  category  ItemCategory @default(NewTask)
+}
+
+enum ItemCategory {
+  NewTask
+  InProcess
+  Completed
+}
